@@ -1,0 +1,8 @@
+if(USE_SSE2)
+	add_library(xoodoo STATIC XKCP/lib/low/Xoodoo/SSE2/Xoodoo-SIMD128.c)
+	target_include_directories(xoodoo PUBLIC XKCP/lib/low/Xoodoo/SSE2)
+else()
+	add_library(xoodoo STATIC XKCP/lib/low/Xoodoo/plain/Xoodoo-optimized.c)
+	target_include_directories(xoodoo PUBLIC XKCP/lib/low/Xoodoo/plain)
+endif()
+target_include_directories(xoodoo PUBLIC XKCP/lib/low/Xoodoo XKCP/lib/common)
