@@ -8,6 +8,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -O3")
 
 option(USE_SSE2 "Use SSE2 version of Xoodoo" ON)
 
+option(USE_AVX512 "Use AVX512 version of Xoodoo" OFF)
+
 option(ENABLE_TEST "Build tests" ON)
 
 add_subdirectory(test)
