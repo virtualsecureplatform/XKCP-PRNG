@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(xoodoo-prng C CXX)
 set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_CXX_FLAGS
+#     "-march=native -O3 -g -funroll-loops -Wall -Wextra -pedantic -Wno-sign-compare"
+# )
 set(CMAKE_CXX_FLAGS
     "-march=native -O3 -g -funroll-loops -Wall -Wextra -pedantic -Wno-sign-compare"
 )

@@ -29,4 +29,5 @@ foreach(test_source ${test_sources})
     ${PROJECT_SOURCE_DIR}/thirdparties/XKCP/lib/low/Xoodoo/plain
 	)
 	endif()
+    target_link_libraries(${test_name} PRIVATE testu01 probdist mylib m)
 endforeach(test_source ${test_sources})
