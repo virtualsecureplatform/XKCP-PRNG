@@ -1,3 +1,6 @@
 [submodule "thirdparties/XKCP"]
 	path = thirdparties/XKCP
 	url = https://github.com/XKCP/XKCP.git
+[submodule "test/randen"]
+	path = test/randen
+	url = https://github.com/google/randen.git

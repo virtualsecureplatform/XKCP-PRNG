@@ -20,7 +20,8 @@ int main()
     unif01_Gen* gen = unif01_CreateExternGenBits("Xoodoo-PRNG", Rand32);
 
     // Run the tests.
-    bbattery_SmallCrush(gen);
+    // bbattery_SmallCrush(gen);
+    bbattery_BigCrush(gen);
 
     // Clean up.
     unif01_DeleteExternGenBits(gen);
