@@ -61,6 +61,7 @@
 #include "randen/util.h"
 
 #include <xoodoo-prng.hpp>
+#include <K12PRNG.hpp>
 
 namespace randen {
 namespace {
@@ -309,6 +310,9 @@ void ForeachEngine(const int unpredictable1) {
 
   XoodooPRNG::XoodooPRNG<T> eng_xoodooprng;
   RunBenchmark("Xoodoo-PRNG", eng_xoodooprng, unpredictable1, benchmark);
+
+  K12PRNG::K12PRNG<T> eng_K12prng;
+  RunBenchmark("K12PRNG", eng_K12prng, unpredictable1, benchmark);
 
 #if ENABLE_RANDEN
   Randen<T> eng_randen;

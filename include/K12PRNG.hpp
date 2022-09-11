@@ -1,6 +1,5 @@
 #pragma once
 
-#include <bits/stdint-uintn.h>
 #include <cstdint>
 #include <cstddef>
 #include <type_traits>
@@ -9,20 +8,20 @@
 #include <functional>
 
 extern "C" {
-#include <Xoodoo-SnP.h>
+#include <KeccakP-1600-SnP.h>
 }
 
 
-namespace XoodooPRNG{
+namespace K12PRNG{
 
-constexpr size_t state_bits = 3*4*4*8;
+constexpr size_t state_bits = 200*8;
 
 
 // Returns values of type "result_type" (must be a built-in unsigned integer type).
 // C++11 URBG interface:
-template <typename result_type, size_t rate_byte = 40>
-struct alignas(64) XoodooPRNG{
-  static constexpr size_t capacity_byte =  48 - rate_byte;
+template <typename result_type, size_t rate_byte = 192>
+struct alignas(64) K12PRNG{
+  static constexpr size_t capacity_byte =  200 - rate_byte;
   static_assert(std::is_unsigned<result_type>::value,
                 "Must be parameterized by a built-in unsigned integer");
   static_assert((rate_byte%(std::numeric_limits<result_type>::digits/8))==0,"rate_byte must be a multiple of sizeof(result_type)");
@@ -39,9 +38,9 @@ struct alignas(64) XoodooPRNG{
     return std::numeric_limits<result_type>::max();
   }
 
-  explicit XoodooPRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value; Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));}
+  explicit K12PRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value;  KeccakP1600_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));}
 
-  explicit XoodooPRNG(std::random_device& seed_gen){
+  explicit K12PRNG(std::random_device& seed_gen){
   // https://cpprefjp.github.io/reference/random/seed_seq.html
   std::array<
     std::random_device::result_type,
@@ -58,7 +57,7 @@ struct alignas(64) XoodooPRNG{
     constexpr size_t ratio = std::numeric_limits<std::random_device::result_type>::digits/std::numeric_limits<result_type>::digits;
     for(int i = 0; i < state.size()/ratio;i++) for(int j = 0; j < ratio; j++) state[i] = seed_data[i*ratio+j] >> (j*std::numeric_limits<result_type>::digits);
   }
-  Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
+   KeccakP1600_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
   }
 
     // Returns random bits from the buffer in units of T.
@@ -66,7 +65,7 @@ struct alignas(64) XoodooPRNG{
     // Refill the buffer if needed (unlikely).
     if (next == buffend) {
       const alignas(64) state_array prev_state = state;
-      Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
+       KeccakP1600_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
       for(int i = buffend; i < state.size(); i++) state[i] ^= prev_state[i];
       next = 0;
     }
