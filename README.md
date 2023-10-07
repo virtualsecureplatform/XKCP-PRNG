@@ -1,2 +1,2 @@
-# Xoodoo-PRNG
-C++ implementation of Xoodoo based CSPRNG
+# XKCP-PRNG
+C++ implementation of CSPRNG using XKCP library.
