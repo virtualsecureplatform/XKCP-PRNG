@@ -62,6 +62,8 @@
 
 #include <xoodoo-prng.hpp>
 #include <K12PRNG.hpp>
+#include <SHAKEPRNG.hpp>
+#include <BLAKE3PRNG.hpp>
 
 namespace randen {
 namespace {
@@ -313,6 +315,15 @@ void ForeachEngine(const int unpredictable1) {
 
   K12PRNG::K12PRNG<T> eng_K12prng;
   RunBenchmark("K12PRNG", eng_K12prng, unpredictable1, benchmark);
+
+  BLAKE3PRNG::BLAKE3PRNG<T> eng_BLAKE3prng;
+  RunBenchmark("BLAKE3PRNG", eng_BLAKE3prng, unpredictable1, benchmark);
+
+  SHAKEPRNG::TurboSHAKE128PRNG<T> eng_TurboSHAKE128prng;
+  RunBenchmark("TurboSHAKE128PRNG", eng_TurboSHAKE128prng, unpredictable1, benchmark);
+
+  SHAKEPRNG::SHAKE128PRNG<T> eng_SHAKE128prng;
+  RunBenchmark("SHAKE128PRNG", eng_SHAKE128prng, unpredictable1, benchmark);
 
 #if ENABLE_RANDEN
   Randen<T> eng_randen;

@@ -4,3 +4,6 @@
 [submodule "test/randen"]
 	path = test/randen
 	url = https://github.com/google/randen.git
+[submodule "thirdparties/BLAKE3"]
+	path = thirdparties/BLAKE3
+	url = https://github.com/BLAKE3-team/BLAKE3.git

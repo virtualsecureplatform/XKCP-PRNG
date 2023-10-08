@@ -38,7 +38,7 @@ struct alignas(64) K12PRNG{
     return std::numeric_limits<result_type>::max();
   }
 
-  explicit K12PRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value;  KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),6);}
+  explicit K12PRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value;  KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),12);}
 
   explicit K12PRNG(std::random_device& seed_gen){
   // https://cpprefjp.github.io/reference/random/seed_seq.html
@@ -57,7 +57,7 @@ struct alignas(64) K12PRNG{
     constexpr size_t ratio = std::numeric_limits<std::random_device::result_type>::digits/std::numeric_limits<result_type>::digits;
     for(int i = 0; i < state.size()/ratio;i++) for(int j = 0; j < ratio; j++) state[i] = seed_data[i*ratio+j] >> (j*std::numeric_limits<result_type>::digits);
   }
-   KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),6);
+   KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),12);
   }
 
     // Returns random bits from the buffer in units of T.
@@ -65,7 +65,7 @@ struct alignas(64) K12PRNG{
     // Refill the buffer if needed (unlikely).
     if (next == buffend) {
       const alignas(64) state_array prev_state = state;
-       KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),6);
+       KeccakP1600_Permute_Nrounds(reinterpret_cast<uint32_t*>(state.data()),12);
       for(int i = buffend; i < state.size(); i++) state[i] ^= prev_state[i];
       next = 0;
     }
