@@ -9,8 +9,9 @@ foreach(test_source ${test_sources})
     ${PROJECT_SOURCE_DIR}/include
     ${XKCP_INCLUDE_DIR}
     ${PROJECT_SOURCE_DIR}/thirdparties/BLAKE3/c
+    ${PROJECT_SOURCE_DIR}/thirdparties/low-latency-crypto-areion/include
     )
-    target_link_libraries(${test_name} PRIVATE ${XKCP_LIBRARY} blake3)
+    target_link_libraries(${test_name} PRIVATE ${XKCP_LIBRARY} blake3 areion)
 endforeach(test_source ${test_sources})
 
 target_link_libraries(wrapper4testu01 PRIVATE testu01 m)

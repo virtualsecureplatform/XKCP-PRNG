@@ -7,3 +7,6 @@
 [submodule "thirdparties/BLAKE3"]
 	path = thirdparties/BLAKE3
 	url = https://github.com/BLAKE3-team/BLAKE3.git
+[submodule "thirdparties/low-latency-crypto-areion"]
+	path = thirdparties/low-latency-crypto-areion
+	url = https://github.com/gmo-ierae/low-latency-crypto-areion.git
