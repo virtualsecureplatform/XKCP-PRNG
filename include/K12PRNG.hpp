@@ -19,7 +19,7 @@ constexpr size_t state_bits = 200*8;
 
 // Returns values of type "result_type" (must be a built-in unsigned integer type).
 // C++11 URBG interface:
-template <typename result_type, size_t rate_byte = 192>
+template <typename result_type, size_t rate_byte = 200-32>
 struct alignas(64) K12PRNG{
   static constexpr size_t capacity_byte =  200 - rate_byte;
   static_assert(std::is_unsigned<result_type>::value,
