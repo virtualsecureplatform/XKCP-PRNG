@@ -20,7 +20,7 @@ constexpr size_t state_bits = 3*4*4*8;
 
 // Returns values of type "result_type" (must be a built-in unsigned integer type).
 // C++11 URBG interface:
-template <typename result_type, size_t rate_byte = 40>
+template <typename result_type, size_t rate_byte = 48-16>
 struct alignas(64) XoodooPRNG{
   static constexpr size_t capacity_byte =  48 - rate_byte;
   static_assert(std::is_unsigned<result_type>::value,

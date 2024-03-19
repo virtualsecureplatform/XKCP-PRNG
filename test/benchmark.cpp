@@ -317,8 +317,11 @@ void ForeachEngine(const int unpredictable1) {
   K12PRNG::K12PRNG<T> eng_K12prng;
   RunBenchmark("K12PRNG", eng_K12prng, unpredictable1, benchmark);
 
-  AreionPRNG::AreionPRNG<T> eng_Areionprng;
-  RunBenchmark("AreionPRNG", eng_Areionprng, unpredictable1, benchmark);
+  AreionPRNG::Areion256PRNG<T> eng_Areion256prng;
+  RunBenchmark("Areion256PRNG", eng_Areion256prng, unpredictable1, benchmark);
+
+  AreionPRNG::Areion512PRNG<T> eng_Areion512prng;
+  RunBenchmark("Areion512PRNG", eng_Areion512prng, unpredictable1, benchmark);
 
   BLAKE3PRNG::BLAKE3PRNG<T> eng_BLAKE3prng;
   RunBenchmark("BLAKE3PRNG", eng_BLAKE3prng, unpredictable1, benchmark);
