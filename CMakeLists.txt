@@ -12,6 +12,7 @@ option(USE_AVX2 "Use AVX2 version" ON)
 
 option(ENABLE_TEST "Build tests" ON)
 
+set(XKCP_TARGET "" CACHE STRING "Build target for XKCP (e.g., AVX2,AVX512,ARMv8A)")
 if(USE_AVX512)
     set(XKCP_TARGET "AVX512")
 elseif(USE_AVX2)

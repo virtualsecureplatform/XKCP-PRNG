@@ -41,7 +41,7 @@ struct alignas(64) Areion512PRNG{
   result_type operator()() {
     // Refill the buffer if needed (unlikely).
     if (next == buffend) {
-      const alignas(64) state_array prev_state = state;
+      alignas(64) const state_array prev_state = state;
       permute_areion_512u8(reinterpret_cast<uint8_t*>(state.data()),reinterpret_cast<const uint8_t*>(prev_state.data()));
       for(int i = buffend; i < state.size(); i++) state[i] ^= prev_state[i];
       next = 0;
@@ -88,7 +88,7 @@ struct alignas(64) Areion256PRNG{
   result_type operator()() {
     // Refill the buffer if needed (unlikely).
     if (next == buffend) {
-      const alignas(64) state_array prev_state = state;
+      alignas(64) const state_array prev_state = state;
       permute_areion_256u8(reinterpret_cast<uint8_t*>(state.data()),reinterpret_cast<const uint8_t*>(prev_state.data()));
       for(int i = buffend; i < state.size(); i++) state[i] ^= prev_state[i];
       next = 0;

@@ -9,6 +9,7 @@
 #include <functional>
 
 extern "C" {
+#include <align.h>
 #include <Xoodoo-SnP.h>
 }
 
@@ -39,7 +40,7 @@ struct alignas(64) XoodooPRNG{
     return std::numeric_limits<result_type>::max();
   }
 
-  explicit XoodooPRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value; Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));}
+  explicit XoodooPRNG(result_type seed_value = 0) { state = {}; state[0] = seed_value; Xoodoo_Permute_12rounds(reinterpret_cast<Xoodoo_align128plain32_state*>(state.data()));}
 
   explicit XoodooPRNG(std::random_device& seed_gen){
   // https://cpprefjp.github.io/reference/random/seed_seq.html
@@ -58,15 +59,15 @@ struct alignas(64) XoodooPRNG{
     constexpr size_t ratio = std::numeric_limits<std::random_device::result_type>::digits/std::numeric_limits<result_type>::digits;
     for(int i = 0; i < state.size()/ratio;i++) for(int j = 0; j < ratio; j++) state[i] = seed_data[i*ratio+j] >> (j*std::numeric_limits<result_type>::digits);
   }
-  Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
+  Xoodoo_Permute_12rounds(reinterpret_cast<Xoodoo_align128plain32_state*>(state.data()));
   }
 
     // Returns random bits from the buffer in units of T.
   result_type operator()() {
     // Refill the buffer if needed (unlikely).
     if (next == buffend) {
-      const alignas(64) state_array prev_state = state;
-      Xoodoo_Permute_12rounds(reinterpret_cast<uint32_t*>(state.data()));
+      alignas(64) const state_array prev_state = state;
+      Xoodoo_Permute_12rounds(reinterpret_cast<Xoodoo_align128plain32_state*>(state.data()));
       for(int i = buffend; i < state.size(); i++) state[i] ^= prev_state[i];
       next = 0;
     }

@@ -1,5 +1,5 @@
 # Allow specifying the build target for XKCP
-set(XKCP_TARGET "" CACHE STRING "Build target for XKCP (e.g., AVX2,AVX512,ARMv8A)")
+message(XKCP_TARGET="${XKCP_TARGET}")
 
 # Define a custom target to build the library using its makefile with the specified target
 add_custom_target(XKCP ALL
