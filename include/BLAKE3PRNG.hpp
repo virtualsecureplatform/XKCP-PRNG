@@ -1,4 +1,6 @@
 #pragma once
+#include <random>
+#include <algorithm>
 
 extern "C" {
 #include <blake3.h>
@@ -7,8 +9,9 @@ extern "C" {
 namespace BLAKE3PRNG{
 // Returns values of type "result_type" (must be a built-in unsigned integer type).
 // C++11 URBG interface:
-template <typename result_type>
+template <typename T>
 struct alignas(64) BLAKE3PRNG{
+  using result_type = T;
   blake3_hasher hasher;
 
   static_assert(std::is_unsigned<result_type>::value,
@@ -39,12 +42,10 @@ struct alignas(64) BLAKE3PRNG{
   explicit BLAKE3PRNG(std::random_device& seed_gen){
 
   // https://cpprefjp.github.io/reference/random/seed_seq.html
-  std::array<uint8_t, 32> seed_data;
-
   std::generate(seed.begin(), seed.end(), std::ref(seed_gen));
 
   blake3_hasher_init_keyed(&hasher, seed.data());
-  blake3_hasher_finalize_seek(&hasher, &counter, (uint8_t*)buffer.data(), buffer_len);
+  blake3_hasher_finalize_seek(&hasher, counter, (uint8_t*)buffer.data(), buffer_len);
   }
 
     // Returns random bits from the buffer in units of T.
